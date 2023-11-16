@@ -1,33 +1,19 @@
 <script lang="ts">
-  import { superForm } from 'sveltekit-superforms/client'
-  import type { PageData } from './$types'
-  import GenericDropdown from '$lib/GenericDropdown.svelte'
-  import { TestSchema } from '$lib/TestSchema'
-  export let data: PageData
+  import { TodoSchema } from '$lib/TodoSchema'
+  import { superForm, superValidateSync } from 'sveltekit-superforms/client'
 
-  const form = superForm(data.form, {
-    dataType: 'json',
-    validators: TestSchema,
-    syncFlashMessage: true
-  })
-  const { enhance } = form
+  const sf = superValidateSync(TodoSchema)
+  const { form, enhance, constraints } = superForm(sf)
 </script>
 
-<container>
-  <div class="p-4">
-    <div class="row">
-      <div class="col-12">
-        <form method="POST" use:enhance>
-          <GenericDropdown
-            {form}
-            field="manyThings"
-            options={data.people.map((p) => {
-              return { value: p.id, label: p.name }
-            })}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</container>
+<p>
+  <a href="/todo">Todo List (Flash message test)</a>
+</p>
+
+<form use:enhance method="POST" action="/api/todo">
+  <input type="text" bind:value={$form.title} placeholder="New todo" {...$constraints.title} />
+  <button type="submit">{$form.id ? 'Update' : 'Add'}</button>
+</form>
+
+Here I don't want to show a flash message or redirect. This will be in a modal window and the modal
+will just close and update a store on the page with the new item.

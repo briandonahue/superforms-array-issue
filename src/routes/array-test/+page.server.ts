@@ -1,5 +1,5 @@
 import { TestSchema } from '$lib/TestSchema'
-import type { Actions, PageServerLoad } from './$types'
+import type { Actions, PageServerLoad } from '../$types'
 import { message, superValidate } from 'sveltekit-superforms/client'
 
 const people = Array.from({ length: 3 }, (_, i) => ({

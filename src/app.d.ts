@@ -2,7 +2,6 @@
 
 import type mongoose from 'mongoose'
 import type { Auth, AuthRequest } from 'lucia'
-import type { Message } from '$lib/Message'
 
 // for information about these interfaces
 declare global {
@@ -21,7 +20,7 @@ declare global {
     type Auth = Auth
   }
   interface PageData {
-    flash?: Message
+    flash?: string
   }
 }
 
