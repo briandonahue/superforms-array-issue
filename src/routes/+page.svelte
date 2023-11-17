@@ -3,7 +3,9 @@
   import { superForm, superValidateSync } from 'sveltekit-superforms/client'
 
   const sf = superValidateSync(TodoSchema)
-  const { form, enhance, constraints } = superForm(sf)
+  const { form, enhance, constraints } = superForm(sf, {
+    dataType: 'json'
+  })
 </script>
 
 <p>
