@@ -1,8 +1,9 @@
 import { type Todo, TodoSchema } from '$lib/TodoSchema'
-import { superValidate } from 'sveltekit-superforms/client'
+import { superValidate } from 'sveltekit-superforms/server'
+import { loadFlash } from 'sveltekit-flash-message/server'
 import type { PageServerLoad } from './$types'
 
-export const load = (async ({ fetch, params }) => {
+export const load = loadFlash((async ({ fetch, params }) => {
   const response = await fetch('/api/todo')
   if (response.ok) {
     const todoList = await response.json() as Todo[]
@@ -13,4 +14,4 @@ export const load = (async ({ fetch, params }) => {
   } else {
     throw new Error('Failed to load todos')
   }
-}) satisfies PageServerLoad
+})) satisfies PageServerLoad
