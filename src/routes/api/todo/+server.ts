@@ -20,19 +20,19 @@ export const POST: RequestHandler = async (request) => {
   } else {
     const todo = form.data
     const index = todos.findIndex(t => t.id === todo.id)
+    let message = ''
     if (index !== -1) {
+      message = 'Todo updated.'
       todos[index] = todo
     } else {
       todo.id = todos.length + 1
       todos.push(todo)
-      const message = 'Todo created.'
+      message = 'Todo created.'
       //      setFlash(message, request)
-      return actionResult('redirect', `/todo/${todo.id}`, {
-        message
-      })
     }
-    const message = 'Todo updated.'
     //    setFlash(message, request)
-    return actionResult('success', { form, message })
+    return actionResult('redirect', `/todo/${todo.id}`, {
+      message
+    })
   }
 }
